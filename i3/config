@@ -149,10 +149,16 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar  {
-     font pango:Ubuntu Condensed 10
+	font pango:Ubuntu Condensed 10
+
+# auto-hide i3bar; display on $mod press
 	mode hide
 	hidden_state hide
 	modifier $mod
+
+# display GPU load in i3bar
+	status_command bash ~/.config/i3status/gpu.bash
+	position bottom
 
 colors {
         background #000000O
@@ -161,42 +167,45 @@ colors {
 
 #	colorclass <border> <background> <text>
 
+# original colors
 #       focused_workspace  #4c7899 #285577 #ffffff
 #	active_workspace   #333333 #5f676a #ffffff
 #       inactive_workspace #333333 #222222 #888888
 #       urgent_workspace   #2f343a #900000 #ffffff
 
+# flat colors
 	focused_workspace  #285577  #285577 #ffffff
         active_workspace   #5f676a  #5f676a #ffffff
         inactive_workspace #222222  #222222 #888888
         urgent_workspace   #900000  #900000 #ffffff
     }
-    status_command bash ~/.config/i3status/gpu.bash
-# i3blocks
-# i3status
-    position bottom
+
 }
 
 
+
+# window rules
 for_window [class="Lazarus"] floating enable
 for_window [title="CPUSimulator"] floating enable
 for_window [title=" - Chromium"] border none
 for_window [title=" - Skype"] floating enable
-for_window [title="ArchLinux1"] border none
+for_window [class="terminology"] border none
 for_window [class="konsole" title="konsole"] border none
 for_window [class="Wine"] floating enable
 
+# lockscreen
 bindsym $mod+Ctrl+l exec i3lock -u -i ~/Pictures/bsod.png
-# i3lock-fancy
-# i3lock -u -i ~/Pictures/bsod.png
+bindsym $mod+Shift+Ctrl+l exec i3lock-fancy
 
-
+# hide borders
 hide_edge_borders both
 new_window normal 1 px
 new_float normal 1 px
 
+# compositing
 exec "compton -b"
-# exec "feh --bg-fill ~/Pictures/bg_linux.jpg"
 
+# wallpaper
+# exec "feh --bg-fill ~/Pictures/bg_linux.jpg"
 exec "feh --bg-fill ~/Pictures/bg_beginning.jpg"
 
