@@ -1,12 +1,15 @@
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="random"
-ZSH_THEME="af-magic"
+# ZSH_THEME="af-magic"	#
+ZSH_THEME="agnoster"
 # ZSH_THEME="blinks"
 # ZSH_THEME="simonoff"
 # ZSH_THEME="clean"
@@ -137,3 +140,7 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 fi
+
+# powerline
+ . /usr/share/zsh/site-contrib/powerline.zsh
+
