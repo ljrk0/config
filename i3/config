@@ -195,6 +195,7 @@ for_window [title=" - Skype"] floating enable
 for_window [class="terminology"] border none
 for_window [class="konsole" title="konsole"] border none
 for_window [class="Wine"] floating enable
+for_window [class="Firefox"] border none
 
 # lockscreen
 bindsym $mod+Ctrl+l exec i3lock -u -i ~/Pictures/bsod.png
