@@ -27,7 +27,8 @@ font pango:Ubuntu Condensed 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminology # i3-sensible-terminal
+bindsym $mod+Return exec qterminal
+# terminology # i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -196,6 +197,8 @@ for_window [class="terminology"] border none
 for_window [class="konsole" title="konsole"] border none
 for_window [class="Wine"] floating enable
 for_window [class="Firefox"] border none
+for_window [class="qterminal"] border none
+
 
 # lockscreen
 bindsym $mod+Ctrl+l exec i3lock -u -i ~/Pictures/bsod.png
