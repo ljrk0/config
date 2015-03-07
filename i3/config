@@ -213,8 +213,8 @@ new_float normal 1 px
 exec "compton -b"
 
 # wallpaper
-# exec "feh --bg-fill ~/Pictures/bg_linux.jpg"
-exec "feh --bg-fill ~/Pictures/bg_shelter.jpg"
+exec "feh --bg-fill ~/Pictures/bg_linux.jpg"
+#exec "feh --bg-fill ~/Pictures/bg_shelter.jpg"
 
 
 # class                 border  backgr. text    indicator

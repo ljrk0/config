@@ -145,4 +145,4 @@ fi
 #. /usr/share/zsh/site-contrib/powerline.zsh
 
 # promptline
-source ~/.config/shellprompt.sh
+# source ~/.config/shellprompt.sh
