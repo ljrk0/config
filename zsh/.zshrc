@@ -8,8 +8,8 @@ export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 # ZSH_THEME="random"
-ZSH_THEME="af-magic"
-# ZSH_THEME="agnoster"
+# ZSH_THEME="af-magic"
+ZSH_THEME="agnoster"
 # ZSH_THEME="blinks"
 # ZSH_THEME="simonoff"
 # ZSH_THEME="clean"
@@ -144,3 +144,5 @@ fi
 # powerline
 #. /usr/share/zsh/site-contrib/powerline.zsh
 
+# promptline
+source ~/.config/shellprompt.sh
