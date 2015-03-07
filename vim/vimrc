@@ -115,3 +115,12 @@ endif
 
 " always show statusline
 set laststatus=2
+
+" scan for plugins
+execute pathogen#infect('bundle/{}', '~/.config/vim/bundle/{}')
+
+" activate promptline
+let g:promptline_theme = 'clear'
+
+" activate airline
+let g:airline#extensions#tabline#enabled = 1
