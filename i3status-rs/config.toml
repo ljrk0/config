@@ -1,0 +1,83 @@
+[theme]
+name = "plain"
+[theme.overrides]
+idle_bg = "#123456"
+idle_fg = "#abcdef"
+info_bg = "#123456"
+info_fg = "#abcdef"
+good_bg = "#123456"
+good_fg = "#abcdef"
+warning_bg = "#123456"
+warning_fg = "#abcdef"
+critical_bg = "#123456"
+critical_fg = "#abcdef"
+separator_bg = "#123456"
+separator_fg = "#abcdef"
+alternating_tint_bg = "#111111"
+alternating_tint_fg = "#111111"
+separator = " "
+
+[icons]
+name = "awesome"
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "available"
+unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "disk_space"
+path = "/home/leonard"
+alias = "home"
+info_type = "available"
+unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "net"
+device = "enp4s0"
+ip = true
+speed_up = false
+graph_up = true
+interval = 5
+
+[[block]]
+block = "net"
+device = "wlp5s0"
+ssid = true
+signal_strength = true
+ip = true
+speed_up = false
+speed_down = false
+graph_down = true
+interval = 5
+
+
+[[block]]
+block = "cpu"
+interval = 1
+
+[[block]]
+block = "load"
+interval = 1
+format = "{1m}"
+
+[[block]]
+block = "battery"
+interval = 10
+format = "{percentage}% {time}"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "time"
+interval = 5
+format = "%Y-%m-%d %H:%M:%S"
