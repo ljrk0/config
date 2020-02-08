@@ -1,0 +1,75 @@
+# Enable plugin plugin :)
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+plug "andreyorst/plug.kak" noload
+
+# Enable LSP support
+plug "ul/kak-lsp" do %{
+    cargo build --release --locked
+    cargo install --force --path .
+} config %{
+    # uncomment to enable debugging
+    #eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
+    #set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+
+    hook global WinSetOption filetype=(rust|c|cpp|latex) %{
+        lsp-enable-window
+        lsp-auto-hover-enable
+    }
+}
+
+# Configure tab behavior
+plug "andreyorst/smarttab.kak" defer smarttab %{
+    # Backspace: Delete 8 spaces / 1 Tab
+    set-option global softtabstop 8
+} config {
+    hook global WinSetOption filetype=(rust|markdown|kak|sh|perl) expandtab
+    hook global WinSetOption filetype=(makefile|gas) noexpandttab
+    hook global WinSetOption filetype=(c|cpp) smarttab
+}
+
+# LaTeXmk suppport
+hook global BufSetOption filetype=(latex) %{
+    declare-option str latexfile
+    # Search for `!TeX root` magic
+    evaluate-commands %sh{
+        file="$kak_buffile"
+        rootmagic=$(grep '^% !TeX root = ' "$file")
+        root=$(echo "$rootmagic" | sed 's/.*= //' -)
+        echo "set-option buffer latexfile ${root:-$file}"
+    }
+    set-option buffer makecmd "latexmk -pvc -view=none %opt{latexfile}"
+    map -docstring "build & view" global user , ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
+    map -docstring "view" global user v ':latex-view<ret>'
+}
+
+define-command -params 0..1 latex-view %{
+    nop %sh{
+        if [ -z "$1" ]; then
+            tex=${kak_opt_latexfile}
+        else
+            tex=$1
+        fi
+        pdf=${tex/%.tex/.pdf}
+        line=${kak_cursor_line}
+        # okular: 'file.pdf#src:linenumber file.tex'
+        okular --unique "$pdf#src:$line $tex" >/dev/null 2>&1 </dev/null &
+    }
+}
+
+# From wiki
+def ide %{
+    rename-client main
+    set global jumpclient main
+
+    new rename-client tools
+    set global toolsclient tools
+
+#    new rename-client docs
+#    set global docsclient docs
+}
+
+
+#require-module x11
+#set-option global termcmd 'konsole -e'
+
+try %{ source ./.kakrc }

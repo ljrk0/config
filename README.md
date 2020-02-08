@@ -11,6 +11,7 @@ Everything package-related is done with ArchLinux in mind.
 * Installing and configuring `git` and `openssh`
 * Switching to `zsh`
 * Enabling `sddm`, `NetworkManager`
+* For kakoune, installing plug.kak locally, then running plug-install
 * After `rustup` is installed, a toolchain should be installed:
   ```
   $ rustup install stable
