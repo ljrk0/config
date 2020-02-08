@@ -45,6 +45,7 @@ block = "net"
 device = "enp4s0"
 ip = true
 speed_up = false
+speed_down = false
 graph_up = true
 interval = 5
 

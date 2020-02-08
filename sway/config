@@ -23,6 +23,7 @@ set $menu dmenu_path | j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' -
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+
 #
 # Example configuration:
 #
@@ -60,6 +61,12 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 
 input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout us
+    xkb_model pc104
+    xkb_variant altgr-intl
+}
+
+input "2131:308:LEOPOLD_Mini_Keyboard" {
     xkb_layout us
     xkb_model pc104
     xkb_variant altgr-intl
@@ -209,7 +216,7 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position bottom
-    font Dejavu Sans Mono, FontAwesome 11
+    font Dejavu Sans Mono, FontAwesome 12
     pango_markup enabled
     #separator_symbol "<"
 
@@ -248,11 +255,14 @@ bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 
-
+bindsym Shift+Print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
+bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
 
 
 # Notification demon
 exec mako
+# Display demon
+exec kanshi
 # XDG Autostart support
 exec dex --autostart --environment NONE
 exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
