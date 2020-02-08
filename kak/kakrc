@@ -21,9 +21,9 @@ plug "ul/kak-lsp" do %{
 plug "andreyorst/smarttab.kak" defer smarttab %{
     # Backspace: Delete 8 spaces / 1 Tab
     set-option global softtabstop 8
-} config {
+} config %{
     hook global WinSetOption filetype=(rust|markdown|kak|sh|perl) expandtab
-    hook global WinSetOption filetype=(makefile|gas) noexpandttab
+    hook global WinSetOption filetype=(makefile|gas) noexpandtab
     hook global WinSetOption filetype=(c|cpp) smarttab
 }
 
