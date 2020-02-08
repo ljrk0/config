@@ -12,6 +12,7 @@ Everything package-related is done with ArchLinux in mind.
 * Switching to `zsh`
 * Enabling `sddm`, `NetworkManager`
 * For kakoune, installing plug.kak locally, then running plug-install
+* Downloading kitty-themes
 * After `rustup` is installed, a toolchain should be installed:
   ```
   $ rustup install stable

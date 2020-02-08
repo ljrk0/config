@@ -10,6 +10,7 @@ ln -sf $PWD/kak ~/.config/
 ln -sf $PWD/kak-lsp ~/.config/
 ln -sf $PWD/latexmk ~/.config/
 ln -sf $PWD/kanshi ~/.config/
+ln -sf $PWD/kitty ~/.config/
 
 ln -sf $PWD/zsh/zprofile ~/.zprofile
 ln -sf $PWD/zsh/zshenv ~/.zshenv
