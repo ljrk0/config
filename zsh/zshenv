@@ -18,8 +18,20 @@ export SDL_VIDEODRIVER=wayland
 # Mozilla: Use modern Webrender
 export MOZ_WEBRENDER=1
 
-# Fix Java on Tiling WMs
+# Java: Fix on Tiling WMs
 export _JAVA_AWT_WM_NONREPARENTING=1
+
+# Java: Use Anti-Aliasing
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on"
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.aatext=true"
+
+# Java: Use GTK+3 Look And Feel
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.sing.plaf.gtk.GTKLookAndFeel"
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Djdk.gtk.version=3"
+
+# Java: Don't try to scale.
+export _JAVA_OPTIONS="$JAVA_OPTIONS -Dsun.java2d.dpiaware=false"
 
 # Use portal for GTK apps to open File Chooser, find settings, etc.
 #export GTK_USE_PORTAL=1
@@ -46,3 +58,13 @@ export PATH=$npm_config_prefix/bin:$PATH
 
 # rust/Cargo
 export PATH=$HOME/.cargo/bin:$PATH
+
+# Use SSH password agent
+#export SSH_ASKPASS=ksshaskpass
+
+# Intel: Use new OpenGL driver
+MESA_LOADER_DRIVER_OVERRIDE=iris
+
+# Intel: VA-API, VDPAU
+LIBVA_DRIVER_NAME=iHD
+VDPAU_DRIVER=va_gl
