@@ -1,0 +1,4 @@
+Tutorenraum-Notebookplatz {
+	output "Dell Inc. DELL 2007FP MY54675F11TL" transform 270 position 0,0
+	output eDP-1 position 1200,0
+}
