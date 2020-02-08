@@ -14,10 +14,10 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term konsole
+set $term kitty --single-instance
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' --prompt '>'  " --use-xdg-de --display-binary --no-generic --term=konsole | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' --prompt '>'  " --use-xdg-de --display-binary --no-generic --term=konsole | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -71,6 +71,13 @@ input "2131:308:LEOPOLD_Mini_Keyboard" {
     xkb_model pc104
     xkb_variant altgr-intl
 }
+
+input "9456:322:Metadot_-_Das_Keyboard_D4269" {
+    xkb_layout us
+    xkb_model pc104
+    xkb_variant altgr-intl
+}
+
 
 ### Key bindings
 #
@@ -257,6 +264,7 @@ bindsym XF86MonBrightnessUp exec brightnessctl set +5%
 
 bindsym Shift+Print exec grim -g "$(slurp)" /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
 bindsym Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') /tmp/screenshot.png && wl-copy < /tmp/screenshot.png
+bindsym $mod+Print exec grim -g "$(slurl)" - | wl-copy
 
 
 # Notification demon
@@ -270,6 +278,9 @@ exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 # Window Rules
 for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable
 
+set $laptop eDP-1
+bindswitch --locked lid:on output $laptop disable
+bindswitch --locked lid:off output $laptop enable
 
 #
 include /etc/sway/config.d/*
