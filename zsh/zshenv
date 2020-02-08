@@ -1,1 +1,48 @@
+# Editor
+export VISUAL=kak
+export EDITOR=kak
 
+# Qt theme
+export QT_QPA_PLATFORMTHEME=qt5ct
+
+# LibreOffice
+SAL_USE_VCLPLUGIN=kde5
+
+# Force use Wayland
+#export GDK_BACKEND=wayland
+export MOZ_ENABLE_WAYLAND=1
+#export QT_QPA_PLATFORM=wayland-egl
+export CLUTTER_BACKEND=wayland
+export SDL_VIDEODRIVER=wayland
+
+# Mozilla: Use modern Webrender
+export MOZ_WEBRENDER=1
+
+# Fix Java on Tiling WMs
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# Use portal for GTK apps to open File Chooser, find settings, etc.
+#export GTK_USE_PORTAL=1
+export XDG_CURRENT_DESKTOP=sway
+
+# XDG Base Directories
+## Defaults
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export XDG_CONFIG_DIRS=/etc/xdg
+
+## Flatpak
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share
+export XDG_DATA_DIRS=$XDG_DATA_DIRS:$XDG_DATA_HOME/flatpak/exports/share
+
+# Colorful less
+export LESS=-R
+
+# Node/NPM
+export npm_config_prefix=$XDG_DATA_HOME/node_modules
+export PATH=$npm_config_prefix/bin:$PATH
+
+# rust/Cargo
+export PATH=$HOME/.cargo/bin:$PATH
