@@ -26,12 +26,12 @@ export _JAVA_OPTIONS="$JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on"
 export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.aatext=true"
 
 # Java: Use GTK+3 Look And Feel
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.sing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Djdk.gtk.version=3"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.sing.plaf.gtk.GTKLookAndFeel"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djdk.gtk.version=3"
 
 # Java: Don't try to scale.
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Dsun.java2d.dpiaware=false"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.dpiaware=false"
 
 # Use portal for GTK apps to open File Chooser, find settings, etc.
 #export GTK_USE_PORTAL=1
