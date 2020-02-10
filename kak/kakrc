@@ -42,6 +42,12 @@ hook global BufSetOption filetype=(latex) %{
     map -docstring "view" global user v ':latex-view<ret>'
 }
 
+# Use bear make wrapper.
+hook global BufSetOption filetype=(c|cpp) %{
+    set-option buffer makecmd "bear make"
+}
+
+
 define-command -params 0..1 latex-view %{
     nop %sh{
         if [ -z "$1" ]; then

@@ -5,11 +5,11 @@ set -e
 # base is not a group
 groups="base-devel kf5 kf5-aids plasma qt qt5 texlive-most texlive-lang"
 
-sway="sddm bemenu brightnessctl dex grim i3status-rust-git j4-dmenu-desktop mako slurp sway swaybg swayidle swaylock waybar kanshi backlightctl"
+sway="sddm bemenu brightnessctl dex grim i3status-rust j4-dmenu-desktop mako slurp sway swaybg swayidle swaylock waybar kanshi backlightctl"
 kde="okular dolphin"
 apps="firefox libreoffice-fresh thunderbird biber texlive-most-doc kitty"
 vms="libvirt virt-manager qemu ovmf freerdp"
-terminal="htop kakoune-git kakoune openssh openbsd-netcat tmux zip unzip tree zsh pacman-contrib texlab"
+terminal="htop kakoune-git kakoune openssh openbsd-netcat tmux zip unzip tree zsh pacman-contrib texlab bear"
 theme="qt5ct lxappearance-gtk3 noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-iosevka-ss05 ttf-font-awesome powerline-fonts dconf-editor"
 boot="sbsigntools sbupdate-git efibootmgr efitools intel-ucode"
 net="dhclient networkmanager"
