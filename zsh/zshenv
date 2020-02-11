@@ -22,8 +22,8 @@ export MOZ_WEBRENDER=1
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Java: Use Anti-Aliasing
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on"
-export _JAVA_OPTIONS="$JAVA_OPTIONS -Dswing.aatext=true"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.aatext=true"
 
 # Java: Use GTK+3 Look And Feel
 export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
