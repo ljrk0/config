@@ -63,8 +63,10 @@ export PATH=$HOME/.cargo/bin:$PATH
 #export SSH_ASKPASS=ksshaskpass
 
 # Intel: Use new OpenGL driver
-MESA_LOADER_DRIVER_OVERRIDE=iris
+export MESA_LOADER_DRIVER_OVERRIDE=iris
 
 # Intel: VA-API, VDPAU
-LIBVA_DRIVER_NAME=iHD
-VDPAU_DRIVER=va_gl
+export LIBVA_DRIVER_NAME=iHD
+export VDPAU_DRIVER=va_gl
+
+eval `luarocks path --append`
