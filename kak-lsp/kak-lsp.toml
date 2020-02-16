@@ -132,7 +132,18 @@ elmPath = "elm"
 elmFormatPath = "elm-format"
 elmTestPath = "elm-test"
 
+#[language.latex]
+#filetypes = ["latex"]
+#roots = [".git"]
+#command = "texlab"
+
 [language.latex]
 filetypes = ["latex"]
 roots = [".git"]
 command = "texlab"
+
+
+[language.context]
+filetypes = ["context"]
+roots = [".git"]
+command = "digestif"
