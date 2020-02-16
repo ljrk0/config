@@ -5,7 +5,7 @@ set -e
 # base is not a group
 groups="base-devel kf5 kf5-aids plasma qt qt5 texlive-most texlive-lang"
 
-sway="sddm bemenu brightnessctl dex grim i3status-rust j4-dmenu-desktop mako slurp sway swaybg swayidle swaylock waybar kanshi backlightctl"
+sway="sddm bemenu brightnessctl dex grim jq i3status-rust j4-dmenu-desktop mako slurp sway swaybg swayidle swaylock waybar kanshi-git wl-clipboard"
 kde="okular dolphin"
 apps="firefox libreoffice-fresh thunderbird biber texlive-most-doc kitty"
 vms="libvirt virt-manager qemu ovmf freerdp"
