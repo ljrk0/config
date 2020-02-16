@@ -11,7 +11,7 @@ plug "ul/kak-lsp" do %{
     #eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
     #set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
 
-    hook global WinSetOption filetype=(rust|c|cpp|latex) %{
+    hook global WinSetOption filetype=(rust|c|cpp|latex|context) %{
         lsp-enable-window
         lsp-auto-hover-enable
     }
@@ -27,19 +27,43 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
     hook global WinSetOption filetype=(c|cpp) smarttab
 }
 
-# LaTeXmk suppport
-hook global BufSetOption filetype=(latex) %{
-    declare-option str latexfile
+hook global BufSetOption filetype=(latex|context) %{
+    declare-option str document
+    declare-option str documenttrunk
+
+    declare-option str pdfviewer
+    set-option buffer pdfviewer "okular"
+    declare-option str pdfvieweropts
+    set-option buffer pdfvieweropts "--unique"
+
+    # printf ${kak_opt_pdfviewerfmt} $pdf $line $tex
+    declare-option str pdfviewerfmt
+    set-option buffer pdfviewerfmt "'%%s#src:%%d %%s'"
+
     # Search for `!TeX root` magic
     evaluate-commands %sh{
-        file="$kak_buffile"
-        rootmagic=$(grep '^% !TeX root = ' "$file")
-        root=$(echo "$rootmagic" | sed 's/.*= //' -)
-        echo "set-option buffer latexfile ${root:-$file}"
+        buffer="$kak_buffile"
+        magic=$(grep '^% !TeX root = ' "$buffer" | sed 's/.*= //' -)
+        root=${magic:-$buffer}
+        trunk=$(echo "$root" | sed 's/\.[^\.]*//' - )
+
+        echo "set-option buffer document ${root}"
+        echo "set-option buffer documenttrunk ${trunk}"
     }
-    set-option buffer makecmd "latexmk -pvc -view=none %opt{latexfile}"
-    map -docstring "build & view" global user , ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
-    map -docstring "view" global user v ':latex-view<ret>'
+
+    declare-option str buildcmd
+    set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
+    map -docstring "build & view" global user , %opt{buildcmd}
+    map -docstring "view" global user v ':pdf-view %opt{documenttrunk}<ret>'
+}
+
+# LaTeXmk suppport
+hook global BufSetOption filetype=(latex) %{
+    set-option buffer makecmd "latexmk -pvc -view=none %opt{document}"
+}
+
+hook global BufSetOption filetype=(context) %{
+    set-option buffer makecmd "context --paranoid --errors=list --nonstopmode %opt{document}"
 }
 
 # Use bear make wrapper.
@@ -48,17 +72,14 @@ hook global BufSetOption filetype=(c|cpp) %{
 }
 
 
-define-command -params 0..1 latex-view %{
+define-command -params 1 pdf-view %{
     nop %sh{
-        if [ -z "$1" ]; then
-            tex=${kak_opt_latexfile}
-        else
-            tex=$1
-        fi
-        pdf=${tex/%.tex/.pdf}
+        pdf="${1}.pdf"
+        tex="${1}.tex"
         line=${kak_cursor_line}
-        # okular: 'file.pdf#src:linenumber file.tex'
-        okular --unique "$pdf#src:$line $tex" >/dev/null 2>&1 </dev/null &
+        args=$(printf "${kak_opt_pdfviewerfmt}" $pdf $line $tex)
+        ${kak_opt_pdfviewer} ${kak_opt_pdfvieweropts} "$pdf#src:$line $tex" >/tmp/bar 2>&1 </dev/null &
+        echo ${kak_opt_pdfviewer} ${kak_opt_pdfvieweropts} ${args} >/tmp/foo
     }
 }
 
