@@ -86,3 +86,16 @@ alias gst='git status'
 alias gc='git commit'
 alias gco='git checkout'
 alias gcmsg='git commit -m'
+
+# Safeguard to force sudoedit
+function sudo {
+    case $1 in
+    $VISUAL|$EDITOR)
+        shift
+        sudoedit ${@}
+        ;;
+    *)
+        sudo $@
+        ;;
+    esac
+}
