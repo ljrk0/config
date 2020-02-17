@@ -62,11 +62,18 @@ export PATH=$HOME/.cargo/bin:$PATH
 # Use SSH password agent
 #export SSH_ASKPASS=ksshaskpass
 
-# Intel: Use new OpenGL driver
-export MESA_LOADER_DRIVER_OVERRIDE=iris
+hostname=`hostname`
+case "$hostname" in
+"zaphod"|"hoopy_frood")
+    # Intel: Use new OpenGL driver
+    export MESA_LOADER_DRIVER_OVERRIDE=iris
 
-# Intel: VA-API, VDPAU
-export LIBVA_DRIVER_NAME=iHD
-export VDPAU_DRIVER=va_gl
+    # Intel: VA-API, VDPAU
+    export LIBVA_DRIVER_NAME=iHD
+    export VDPAU_DRIVER=va_gl
+    ;;
+*)
+    ;;
+esac
 
 eval `luarocks path --append`
