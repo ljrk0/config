@@ -88,6 +88,7 @@ alias gco='git checkout'
 alias gcmsg='git commit -m'
 
 # Safeguard to force sudoedit
+_sudo=$(command -v sudo)
 function sudo {
     case $1 in
     $VISUAL|$EDITOR)
@@ -95,7 +96,7 @@ function sudo {
         sudoedit ${@}
         ;;
     *)
-        sudo $@
+        $_sudo $@
         ;;
     esac
 }
