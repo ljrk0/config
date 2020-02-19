@@ -87,6 +87,8 @@ alias gc='git commit'
 alias gco='git checkout'
 alias gcmsg='git commit -m'
 
+alias make='bear make'
+
 # Safeguard to force sudoedit
 _sudo=$(command -v sudo)
 function sudo {

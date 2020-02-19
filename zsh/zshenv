@@ -60,7 +60,7 @@ export PATH=$npm_config_prefix/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 
 # Use SSH password agent
-#export SSH_ASKPASS=ksshaskpass
+export SSH_ASKPASS=ksshaskpass
 
 hostname=`hostname`
 case "$hostname" in
