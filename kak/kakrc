@@ -95,6 +95,8 @@ def ide %{
 #    set global docsclient docs
 }
 
+# Highlight column
+add-highlighter global/ column '%opt{autowrap_column}' default,red
 
 #require-module x11
 #set-option global termcmd 'konsole -e'
