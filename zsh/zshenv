@@ -37,6 +37,10 @@ export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.dpiaware=false"
 #export GTK_USE_PORTAL=1
 export XDG_CURRENT_DESKTOP=sway
 
+# Prevent Steam Big-Picture (and other SDL programs) from minimizing when
+# moving the cursor outside of the window/monitor
+export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
+
 # XDG Base Directories
 ## Defaults
 export XDG_CONFIG_HOME=$HOME/.config
@@ -64,7 +68,7 @@ export SSH_ASKPASS=ksshaskpass
 
 hostname=`hostname`
 case "$hostname" in
-"zaphod"|"hoopy_frood")
+"zaphod"|"hoopyfrood")
     # Intel: Use new OpenGL driver
     export MESA_LOADER_DRIVER_OVERRIDE=iris
 
@@ -72,8 +76,14 @@ case "$hostname" in
     export LIBVA_DRIVER_NAME=iHD
     export VDPAU_DRIVER=va_gl
     ;;
+"Eddie")
+    # AMD: Use ACO compiler
+    export RADV_PERFTEST=aco
 *)
     ;;
 esac
+
+# Threaded Gl
+export mesa_glthread=true
 
 eval `luarocks path --append`
