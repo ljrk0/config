@@ -79,6 +79,7 @@ case "$hostname" in
 "Eddie")
     # AMD: Use ACO compiler
     export RADV_PERFTEST=aco
+    ;;
 *)
     ;;
 esac
