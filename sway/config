@@ -17,7 +17,7 @@ set $right l
 set $term kitty
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' --prompt '>'  " --use-xdg-de --display-binary --no-generic --term=konsole | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' --prompt '>'  " --use-xdg-de --display-binary --no-generic --term=kitty | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -281,7 +281,7 @@ exec mako
 # Display demon
 exec kanshi
 # XDG Autostart support
-exec dex --autostart --environment NONE
+exec dex --autostart --environment sway
 exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # Window Rules
