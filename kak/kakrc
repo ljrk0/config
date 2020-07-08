@@ -17,12 +17,25 @@ plug "ul/kak-lsp" do %{
     }
 }
 
+# Enable editorconfig support
+hook global WinCreate ^[^*]+$ %{editorconfig-load}
+
+# Buffer fallbacks
+#hook global WinSetOption filetype=(c|cpp) %{
+#    set-option buffer indentwidth 8
+#    set-option buffer tabstop %opt{indentwidth}
+#}
+#hook global WinSetOption filetype=(latex|context) %{
+#    set-option buffer indentwidth 2
+#    set-option buffer tabstop %opt{indentwidth}
+#}
+
 # Configure tab behavior
 plug "andreyorst/smarttab.kak" defer smarttab %{
     # Backspace: Delete 8 spaces / 1 Tab
-    set-option global softtabstop 8
+    set-option global softtabstop %opt{indentwidth}
 } config %{
-    hook global WinSetOption filetype=(rust|markdown|kak|sh|perl) expandtab
+    hook global WinSetOption filetype=(rust|markdown|kak|sh|perl|latex|context) expandtab
     hook global WinSetOption filetype=(makefile|gas) noexpandtab
     hook global WinSetOption filetype=(c|cpp) smarttab
 }
