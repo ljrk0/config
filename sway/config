@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term kitty
+set $term kitty #--single-instance
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu j4-dmenu-desktop --dmenu="bemenu -i --fn 'Monospace 13' --prompt '>'  " --use-xdg-de --display-binary --no-generic --term=kitty | xargs swaymsg exec --
@@ -286,10 +286,13 @@ exec dex /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 
 # Window Rules
 for_window [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable
+for_window [class="FreifunkMeet" window_role="^browser-window$"] floating enable
 
 set $laptop eDP-1
 bindswitch --locked lid:on output $laptop disable
 bindswitch --locked lid:off output $laptop enable
+
+
 
 #
 include /etc/sway/config.d/*
