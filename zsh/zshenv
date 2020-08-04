@@ -27,7 +27,7 @@ export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.aatext=true"
 
 # Java: Use GTK+3 Look And Feel
 export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.sing.plaf.gtk.GTKLookAndFeel"
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djdk.gtk.version=3"
 
 # Java: Don't try to scale.
