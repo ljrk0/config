@@ -63,6 +63,9 @@ export PATH=$npm_config_prefix/bin:$PATH
 # rust/Cargo
 export PATH=$HOME/.cargo/bin:$PATH
 
+# Python/pip
+export PATH=$HOME/.local/bin:$PATH
+
 # Use SSH password agent
 export SSH_ASKPASS=ksshaskpass
 
@@ -86,5 +89,8 @@ esac
 
 # Threaded Gl
 export mesa_glthread=true
+
+# LuaTeX search dirs
+#OSFONTDIR="/usr/share/fonts"
 
 eval `luarocks path --append`
