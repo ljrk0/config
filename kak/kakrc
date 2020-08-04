@@ -34,10 +34,12 @@ hook global WinCreate ^[^*]+$ %{editorconfig-load}
 plug "andreyorst/smarttab.kak" defer smarttab %{
     # Backspace: Delete 8 spaces / 1 Tab
     set-option global softtabstop %opt{indentwidth}
+    set-option global tabstop %opt{indentwidth}
 } config %{
     hook global WinSetOption filetype=(rust|markdown|kak|sh|perl|latex|context) expandtab
     hook global WinSetOption filetype=(makefile|gas) noexpandtab
     hook global WinSetOption filetype=(c|cpp) smarttab
+    hook global WinSetOption filetype=(latex) smarttab
 }
 
 hook global BufSetOption filetype=(latex|context) %{
@@ -113,5 +115,6 @@ add-highlighter global/ column '%opt{autowrap_column}' default,red
 
 #require-module x11
 #set-option global termcmd 'konsole -e'
+#set-option terminal 'kitty'
 
 try %{ source ./.kakrc }
