@@ -67,7 +67,7 @@ setopt share_history
 
 autoload -Uz promptinit
 promptinit
-prompt walters
+prompt redhat
 
 
 
@@ -101,4 +101,13 @@ function sudo {
         $_sudo $@
         ;;
     esac
+}
+
+# Most remotes do not speak cat.
+if [ "$TERM" = "xterm-kitty" ]; then
+    alias ssh='env TERM=xterm-256color ssh'
+fi
+
+function shtart() {
+    nohup $@ >/dev/null 2>&1 &!
 }
