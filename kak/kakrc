@@ -2,6 +2,13 @@
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
+
+hook global BufCreate .*[.](cs) %{
+    set-option buffer filetype csharp
+}
+
+
+
 # Enable LSP support
 plug "ul/kak-lsp" do %{
     cargo build --release --locked
