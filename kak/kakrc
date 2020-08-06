@@ -67,7 +67,7 @@ hook global BufSetOption filetype=(latex|context) %{
         buffer="$kak_buffile"
         magic=$(grep '^% !TeX root = ' "$buffer" | sed 's/.*= //' -)
         root=${magic:-$buffer}
-        trunk=$(echo "$root" | sed 's/\.[^\.]*//' - )
+        trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
         echo "set-option buffer document ${root}"
         echo "set-option buffer documenttrunk ${trunk}"
