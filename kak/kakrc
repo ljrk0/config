@@ -105,6 +105,9 @@ define-command -params 1 pdf-view %{
     }
 }
 
+require-module kitty
+set-option global kitty_window_type os
+
 # From wiki
 def ide %{
     rename-client main
@@ -120,8 +123,5 @@ def ide %{
 # Highlight column
 add-highlighter global/ column '%opt{autowrap_column}' default,red
 
-#require-module x11
-#set-option global termcmd 'konsole -e'
-#set-option terminal 'kitty'
 
 try %{ source ./.kakrc }
