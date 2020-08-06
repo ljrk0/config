@@ -6,7 +6,7 @@ export EDITOR=kak
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # LibreOffice
-SAL_USE_VCLPLUGIN=kde5
+export SAL_USE_VCLPLUGIN=kde5
 
 # Force use Wayland
 #export GDK_BACKEND=wayland
