@@ -51,8 +51,8 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 }
 
 hook global BufSetOption filetype=(latex|context) %{
-    declare-option str document
-    declare-option str documenttrunk
+    declare-option str documentsrc
+    declare-option str documentdest
 
     declare-option str pdfviewer
     set-option buffer pdfviewer "okular"
@@ -70,23 +70,23 @@ hook global BufSetOption filetype=(latex|context) %{
         root=${magic:-$buffer}
         trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
-        echo "set-option buffer document ${root}"
-        echo "set-option buffer documenttrunk ${trunk}"
+        echo "set-option buffer documentsrc ${root}"
+        echo "set-option buffer documentdest ${trunk}.pdf"
     }
 
     declare-option str buildcmd
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
     map -docstring "build & view" global user , %opt{buildcmd}
-    map -docstring "view" global user v ':pdf-view %opt{documenttrunk}<ret>'
+    map -docstring "view" global user v ':pdf-view %opt{documentdest}%opt{documentsrc} <ret>'
 }
 
 # LaTeXmk suppport
 hook global BufSetOption filetype=(latex) %{
-    set-option buffer makecmd "latexmk -pvc -view=none %opt{document}"
+    set-option buffer makecmd "latexmk -pvc -view=none %opt{documentsrc}"
 }
 
 hook global BufSetOption filetype=(context) %{
-    set-option buffer makecmd "context --paranoid --errors=list --nonstopmode %opt{document}"
+    set-option buffer makecmd "context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
 }
 
 # Use bear make wrapper.
@@ -95,14 +95,14 @@ hook global BufSetOption filetype=(c|cpp) %{
 }
 
 
-define-command -params 1 pdf-view %{
+define-command -params 2 pdf-view %{
     nop %sh{
-        pdf="${1}.pdf"
-        tex="${1}.tex"
+        pdf="${1}"
+        tex="${2}"
         line=${kak_cursor_line}
         args=$(printf "${kak_opt_pdfviewerfmt}" $pdf $line $tex)
         ${kak_opt_pdfviewer} ${kak_opt_pdfvieweropts} "$pdf#src:$line $tex" >/tmp/bar 2>&1 </dev/null &
-        echo ${kak_opt_pdfviewer} ${kak_opt_pdfvieweropts} ${args} >/tmp/foo
+#        echo ${kak_opt_pdfviewer} ${kak_opt_pdfvieweropts} ${args} >/tmp/foo
     }
 }
 
