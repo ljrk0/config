@@ -24,18 +24,19 @@ plug "ul/kak-lsp" do %{
     }
 }
 
+# Buffer fallbacks
+hook global WinSetOption filetype=(c|cpp) %{
+    set-option window indentwidth 8
+}
+hook global WinSetOption filetype=(latex|context) %{
+    set-option window indentwidth 2
+}
+hook global WinSetOption filetype=makefile %{
+  set-option window indentwidth 8
+}
+
 # Enable editorconfig support
 hook global WinCreate ^[^*]+$ %{editorconfig-load}
-
-# Buffer fallbacks
-#hook global WinSetOption filetype=(c|cpp) %{
-#    set-option buffer indentwidth 8
-#    set-option buffer tabstop %opt{indentwidth}
-#}
-#hook global WinSetOption filetype=(latex|context) %{
-#    set-option buffer indentwidth 2
-#    set-option buffer tabstop %opt{indentwidth}
-#}
 
 # Configure tab behavior
 plug "andreyorst/smarttab.kak" defer smarttab %{
