@@ -46,7 +46,7 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
 } config %{
     hook global WinSetOption filetype=(rust|markdown|kak|sh|perl|latex|context) expandtab
     hook global WinSetOption filetype=(makefile|gas) noexpandtab
-    hook global WinSetOption filetype=(c|cpp) smarttab
+    hook global WinSetOption filetype=(c|cpp|go) smarttab
     hook global WinSetOption filetype=(latex) smarttab
 }
 
@@ -123,6 +123,8 @@ def ide %{
 
 # Highlight column
 add-highlighter global/ column '%opt{autowrap_column}' default,red
-
+set-face global Whitespace rgb:aaaaaa
+add-highlighter global/ show-whitespaces
+add-highlighter global/ number-lines -relative
 
 try %{ source ./.kakrc }
