@@ -24,30 +24,39 @@ plug "ul/kak-lsp" do %{
     }
 }
 
-# Buffer fallbacks
-hook global WinSetOption filetype=(c|cpp) %{
-    set-option window indentwidth 8
+# Referece
+# * indentwidth: Number of *spaces* to insert
+# * tabstop: Number of spaces a *tab* is rendered to be.
+
+# Per-Buffer indendation fallbacks/defaults
+hook global BufCreate .*[.](c|cpp) %{
+    set-option buffer indentwidth 0
+    set-option buffer tabstop 4
 }
-hook global WinSetOption filetype=(latex|context) %{
-    set-option window indentwidth 2
+hook global BufCreate .*[.](tex|mkiv|mkii) %{
+    set-option buffer indentwidth 2
 }
-hook global WinSetOption filetype=makefile %{
-  set-option window indentwidth 8
+hook global BufCreate (.*[.](.mk))|(Makefile) %{
+  set-option buffer indentwidth 8
 }
 
-# Enable editorconfig support
+# Enable editorconfig support, possibly overriding defaults.
 hook global WinCreate ^[^*]+$ %{editorconfig-load}
 
-# Configure tab behavior
-plug "andreyorst/smarttab.kak" defer smarttab %{
-    # Backspace: Delete 8 spaces / 1 Tab
-    set-option global softtabstop %opt{indentwidth}
-    set-option global tabstop %opt{indentwidth}
-} config %{
-    hook global WinSetOption filetype=(rust|markdown|kak|sh|perl|latex|context) expandtab
-    hook global WinSetOption filetype=(makefile|gas) noexpandtab
-    hook global WinSetOption filetype=(c|cpp|go) smarttab
-    hook global WinSetOption filetype=(latex) smarttab
+# Configure tab and backspace key behavior based on previous settings
+plug "andreyorst/smarttab.kak" defer smarttab config %{
+    hook global WinSetOption filetype=(.*) %{
+        evaluate-commands %sh{
+            if [ $kak_opt_indentwidth -ne 0 ]; then
+                echo "expandtab"
+                echo "set-option buffer softtabstop $kak_opt_indentwidth"
+            elif [ $kak_opt_filetype = "gas" ] || [ $kak_opt_filetype = "nasm" ]
+                echo "noexpandtab"
+            else
+                echo "smarttab"
+            fi
+        }
+    }
 }
 
 hook global BufSetOption filetype=(latex|context) %{
