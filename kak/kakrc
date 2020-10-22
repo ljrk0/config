@@ -74,12 +74,13 @@ hook global BufSetOption filetype=(latex|context) %{
     # Search for `!TeX root` magic
     evaluate-commands %sh{
         buffer="$kak_buffile"
+        dir=$(dirname ${buffer})
         magic=$(grep '^% !TeX root = ' "$buffer" | sed 's/.*= //' -)
         root=${magic:-$buffer}
         trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
-        echo "set-option buffer documentsrc ${root}"
-        echo "set-option buffer documentdest ${trunk}.pdf"
+        echo "set-option buffer documentsrc $dir/${root}"
+        echo "set-option buffer documentdest $dir/${trunk}.pdf"
     }
 
     declare-option str buildcmd
@@ -87,16 +88,18 @@ hook global BufSetOption filetype=(latex|context) %{
     map -docstring "build & view" global user , %opt{buildcmd}
     map -docstring "view" global user v ':pdf-view %opt{documentdest}%opt{documentsrc} <ret>'
 
+    declare-option str projdir
     declare-option str workdir
-    declare-option str mount
+    declare-option str osfontdir
     evaluate-commands %sh{
-        workdir=$(realpath .)
+        projdir=$(realpath .)
+        workdir=$(dirname $(realpath ${kak_opt_documentsrc}))
+        echo "set-option buffer projdir ${projdir}"
         echo "set-option buffer workdir ${workdir}"
-        mount=$(findmnt -T ${workdir} -n -o TARGET)
-        echo "set-option buffer mount ${mount}"
+        echo "set-option buffer osfontdir \"/usr/share/fonts//;${projdir}/fonts//\""
     }
     declare-option str podman
-    set-option buffer podman "podman run -v %opt{mount}:%opt{mount} -w %opt{workdir}"
+    set-option buffer podman "podman run -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
 }
 
 # LaTeXmk suppport
@@ -109,7 +112,7 @@ hook global BufSetOption filetype=(latex) %{
 hook global BufSetOption filetype=(context) %{
     declare-option str context
     set-option buffer context "contextgarden/context:current"
-    set-option buffer makecmd "%opt{podman} %opt{context} context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
+    set-option buffer makecmd "%opt{podman} %opt{context} env OSFONTDIR='%opt{osfontdir}' context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
 }
 
 # Use bear make wrapper.
