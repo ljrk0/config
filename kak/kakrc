@@ -86,15 +86,30 @@ hook global BufSetOption filetype=(latex|context) %{
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
     map -docstring "build & view" global user , %opt{buildcmd}
     map -docstring "view" global user v ':pdf-view %opt{documentdest}%opt{documentsrc} <ret>'
+
+    declare-option str workdir
+    declare-option str mount
+    evaluate-commands %sh{
+        workdir=$(realpath .)
+        echo "set-option buffer workdir ${workdir}"
+        mount=$(findmnt -T ${workdir} -n -o TARGET)
+        echo "set-option buffer mount ${mount}"
+    }
+    declare-option str podman
+    set-option buffer podman "podman run -v %opt{mount}:%opt{mount} -w %opt{workdir}"
 }
 
 # LaTeXmk suppport
 hook global BufSetOption filetype=(latex) %{
-    set-option buffer makecmd "latexmk -pvc -view=none %opt{documentsrc}"
+    declare-option str texlive
+    set-option buffer texlive "texlive/texlive"
+    set-option buffer makecmd "%opt{podman} %opt{texlive} latexmk -pvc -view=none %opt{documentsrc}"
 }
 
 hook global BufSetOption filetype=(context) %{
-    set-option buffer makecmd "context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
+    declare-option str context
+    set-option buffer context "contextgarden/context:current"
+    set-option buffer makecmd "%opt{podman} %opt{context} context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
 }
 
 # Use bear make wrapper.
