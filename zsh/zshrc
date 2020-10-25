@@ -87,7 +87,7 @@ alias gc='git commit'
 alias gco='git checkout'
 alias gcmsg='git commit -m'
 
-alias make='bear make'
+alias make='bear -- make'
 
 alias bc='bc -q'
 
