@@ -30,7 +30,7 @@ plug "ul/kak-lsp" do %{
 # Per-Buffer indendation fallbacks/defaults
 hook global BufCreate .*[.](c|cpp|gas) %{
     set-option buffer indentwidth 0
-    set-option buffer tabstop 4
+    set-option buffer tabstop 8
 }
 hook global BufCreate .*[.](tex|mkiv|mkii) %{
     set-option buffer indentwidth 2
