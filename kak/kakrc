@@ -1,6 +1,6 @@
 # Enable plugin plugin :)
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
-plug "andreyorst/plug.kak" noload
+plug "robertmeta/plug.kak" noload
 
 # Enable support for C#
 # c.f. rc/filetype/c-family.kak
@@ -28,7 +28,7 @@ plug "ul/kak-lsp" do %{
 # * tabstop: Number of spaces a *tab* is rendered to be.
 
 # Per-Buffer indendation fallbacks/defaults
-hook global BufCreate .*[.](c|cpp) %{
+hook global BufCreate .*[.](c|cpp|gas) %{
     set-option buffer indentwidth 0
     set-option buffer tabstop 4
 }
@@ -149,7 +149,7 @@ def ide %{
 
 # Highlight column
 add-highlighter global/ column '%opt{autowrap_column}' default,red
-set-face global Whitespace rgb:aaaaaa
+set-face global Whitespace rgb:dddddd
 add-highlighter global/ show-whitespaces
 add-highlighter global/ number-lines -relative
 
