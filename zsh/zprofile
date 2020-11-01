@@ -8,19 +8,24 @@ if [ "$XDG_CURRENT_DESKTOP" = "sway" ]; then
     # Java: Fix on Tiling WMs
     export _JAVA_AWT_WM_NONREPARENTING=1
 
-    # Force use Wayland (breaks GNOME session)
+    # Force use Wayland
     export GDK_BACKEND=wayland
 
-    # Use portal for GTK apps to open File Chooser, find settings, etc. (makes GNOME session slow)
+    # Use portal for GTK apps to open File Chooser, find settings, etc.
     #export GTK_USE_PORTAL=1
 
     # Use SSH password agent
     export SSH_ASKPASS=ksshaskpass    
 elif [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
-
-
     # Use qgnomeplatform
     export QT_QPA_PLATFORMTHEME=gnome
+
+    # Force use Wayland
+    # (breaks GNOME session)
+    #export GDK_BACKEND=wayland
+    # Use portal for GTK apps to open File Chooser, find settings, etc.
+    # (makes GNOME session slow)
+    #export GTK_USE_PORTAL=1
 fi
 
 

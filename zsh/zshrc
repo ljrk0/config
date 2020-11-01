@@ -1,7 +1,10 @@
 HISTFILE=~/.histfile
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+HISTORY_IGNORE="(ls|cd|pwd|exit|cd ..)"
 bindkey -e
 zstyle :compinstall filename '/home/leonard/.zshrc'
 
