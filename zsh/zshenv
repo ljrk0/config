@@ -17,6 +17,9 @@ export XDG_DATA_DIRS=$XDG_DATA_DIRS:$XDG_DATA_HOME/flatpak/exports/share
 ## Adhere to XDG
 export LEDGER_FILE=$XDG_DATA_HOME/hledger/hledger.journal
 export TEXMFHOME=$XDG_DATA_HOME/texmf
+export TEXMFVAR=$XDG_CACHE_HOME/texlive/texmf-var
+export TEXMFCONFIG=$XDG_CONFIG_HOME/texlive/texmf-config
+
 export LESSHISTFILE=$XDG_CACHE_HOME/less/history 
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export npm_config_prefix=$XDG_DATA_HOME/node_modules
