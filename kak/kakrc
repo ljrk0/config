@@ -34,6 +34,7 @@ hook global BufCreate .*[.](c|cpp|gas) %{
 }
 hook global BufCreate .*[.](tex|mkiv|mkii) %{
     set-option buffer indentwidth 2
+    set-option buffer tabstop 4
 }
 hook global BufCreate (.*[.](.mk))|(Makefile) %{
   set-option buffer indentwidth 8
@@ -72,34 +73,54 @@ hook global BufSetOption filetype=(latex|context) %{
     set-option buffer pdfviewerfmt "'%%s#src:%%d %%s'"
 
     # Search for `!TeX root` magic
+    declare-option str projdir
+    declare-option str workdir
     evaluate-commands %sh{
-        buffer="$kak_buffile"
-        dir=$(dirname ${buffer})
-        magic=$(grep '^% !TeX root = ' "$buffer" | sed 's/.*= //' -)
-        root=${magic:-$buffer}
+        buffile=$kak_buffile
+
+        # We have three (possibly) different directories:
+        # * project dir:  The current working directory.
+        #   Usually the topmost dir, often containing multiple TeX roots and
+        #   other resources such as bibliography files or fonts.
+        # * buffer directory:  The directory containing the opened buffer.
+        # * work directory:  The directory containing the TeX root of the
+        #   currently opened buffer.
+        #
+        # The last is the most tricky to resolve, since if the buffer contains
+        # a `% !TeX root = ` magic, it is not necessarily the same as the
+        # buffer directory.  The magic itself may be even a relative path,
+        # seen from the perspective of the buffer directory.
+        projdir=$(realpath .)
+        bufdir=$(dirname $buffile)
+
+        # Parse the magic
+        magic=$(grep '^% !TeX root = ' "$buffile" | sed 's/.*= //' -)
+        case $magic in
+          # No magic
+          "") root=$buffile ;;
+          # absolute path
+          /*) root=$magic ;;
+          # relative path
+          *)  root=$(readlink -f $bufdir/$magic) ;;
+        esac
+        workdir=$(dirname $root)
+        # Strip the file extension
         trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
-        echo "set-option buffer documentsrc $dir/${root}"
-        echo "set-option buffer documentdest $dir/${trunk}.pdf"
+        echo "set-option buffer documentsrc ${root}"
+        echo "set-option buffer documentdest ${trunk}.pdf"
+        echo "set-option buffer projdir ${projdir}"
+        echo "set-option buffer workdir ${workdir}"
     }
+    declare-option str osfontdir
+    set-option buffer osfontdir "/usr/share/fonts//;%opt{projdir}/fonts//"
+    declare-option str podman
+    set-option buffer podman "podman run -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
 
     declare-option str buildcmd
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
     map -docstring "build & view" global user , %opt{buildcmd}
     map -docstring "view" global user v ':pdf-view %opt{documentdest}%opt{documentsrc} <ret>'
-
-    declare-option str projdir
-    declare-option str workdir
-    declare-option str osfontdir
-    evaluate-commands %sh{
-        projdir=$(realpath .)
-        workdir=$(dirname $(realpath ${kak_opt_documentsrc}))
-        echo "set-option buffer projdir ${projdir}"
-        echo "set-option buffer workdir ${workdir}"
-        echo "set-option buffer osfontdir \"/usr/share/fonts//;${projdir}/fonts//\""
-    }
-    declare-option str podman
-    set-option buffer podman "podman run -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
 }
 
 # LaTeXmk suppport
