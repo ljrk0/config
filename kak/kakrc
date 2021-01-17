@@ -44,13 +44,15 @@ hook global BufCreate (.*[.](.mk))|(Makefile) %{
 hook global WinCreate ^[^*]+$ %{editorconfig-load}
 
 # Configure tab and backspace key behavior based on previous settings
-plug "andreyorst/smarttab.kak" defer smarttab config %{
+plug "andreyorst/smarttab.kak" defer smarttab %{
+    # set-option global softtabstop 4
+} config %{
     hook global WinSetOption filetype=(.*) %{
         evaluate-commands %sh{
             if [ $kak_opt_indentwidth -ne 0 ]; then
                 echo "expandtab"
                 echo "set-option buffer softtabstop $kak_opt_indentwidth"
-            elif [ $kak_opt_filetype = "gas" ] || [ $kak_opt_filetype = "nasm" ]
+            elif [ $kak_opt_filetype = "gas" ] || [ $kak_opt_filetype = "nasm" ]; then
                 echo "noexpandtab"
             else
                 echo "smarttab"
