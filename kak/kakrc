@@ -140,7 +140,7 @@ hook global BufSetOption filetype=(context) %{
 
 # Use bear make wrapper.
 hook global BufSetOption filetype=(c|cpp) %{
-    set-option buffer makecmd "bear make"
+    set-option buffer makecmd "bear -- make"
 }
 
 
