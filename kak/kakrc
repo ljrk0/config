@@ -36,8 +36,9 @@ hook global BufCreate .*[.](tex|mkiv|mkii) %{
     set-option buffer indentwidth 2
     set-option buffer tabstop 4
 }
-hook global BufCreate (.*[.](.mk))|(Makefile) %{
-  set-option buffer indentwidth 8
+hook global BufCreate (.*[.]mk|[Mm]akefile) %{
+    set-option buffer indentwidth 0
+    set-option buffer tabstop 8
 }
 
 # Enable editorconfig support, possibly overriding defaults.
