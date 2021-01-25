@@ -172,7 +172,9 @@ def ide %{
 }
 
 # Highlight column
-add-highlighter global/ column '%opt{autowrap_column}' default,red
+hook global BufSetOption autowrap_column=.* %{
+    add-highlighter -override buffer/autowrap_column column %opt{autowrap_column} default,red
+}
 set-face global Whitespace rgb:dddddd
 add-highlighter global/ show-whitespaces
 add-highlighter global/ number-lines -relative
