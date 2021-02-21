@@ -171,6 +171,8 @@ def ide %{
 #    set global docsclient docs
 }
 
+set-option -add global ui_options ncurses_assistant=cat
+
 # Highlight column
 hook global BufSetOption autowrap_column=.* %{
     add-highlighter -override buffer/autowrap_column column %opt{autowrap_column} default,red
