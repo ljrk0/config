@@ -185,7 +185,7 @@ set-option -add global ui_options ncurses_assistant=cat
 hook global BufSetOption autowrap_column=.* %{
     add-highlighter -override buffer/autowrap_column column %opt{autowrap_column} default,red
 }
-set-face global Whitespace rgb:dddddd
+set-face global Whitespace rgb:dddddd+f
 add-highlighter global/ show-whitespaces
 add-highlighter global/ number-lines -relative
 
