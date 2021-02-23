@@ -62,6 +62,14 @@ plug "andreyorst/smarttab.kak" defer smarttab %{
     }
 }
 
+hook global BufSetOption filetype=(rust) %{
+#    set-option buffer makecmd "cargo --color always"
+    set-option buffer makecmd "cargo"
+    map -docstring "run" global user , ':make run<ret>'
+    map -docstring "test" global user t ':make test<ret>'
+    map -docstring "build" global user b ':make build<ret>'
+}
+
 hook global BufSetOption filetype=(latex|context) %{
     declare-option str documentsrc
     declare-option str documentdest
