@@ -9,7 +9,7 @@ hook global BufCreate .*[.](cs) %{
 }
 
 # Enable LSP support
-plug "ul/kak-lsp" do %{
+plug "kak-lsp/kak-lsp" do %{
     cargo build --release --locked
     cargo install --force --path .
 } config %{
