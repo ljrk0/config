@@ -126,7 +126,7 @@ hook global BufSetOption filetype=(latex|context) %{
     declare-option str osfontdir
     set-option buffer osfontdir "/usr/share/fonts//;%opt{projdir}/fonts//"
     declare-option str podman
-    set-option buffer podman "podman run -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
+    set-option buffer podman "podman run --rm -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
 
     declare-option str buildcmd
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
