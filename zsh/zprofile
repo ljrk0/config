@@ -35,7 +35,8 @@ export MOZ_WEBRENDER=1
 
 ## Force use Wayland (other than GDK)
 export MOZ_ENABLE_WAYLAND=1
-export QT_QPA_PLATFORM=wayland-egl
+# FIXME: https://bugreports.qt.io/browse/QTBUG-68636
+#export QT_QPA_PLATFORM=wayland-egl
 export CLUTTER_BACKEND=wayland
 export SDL_VIDEODRIVER=wayland
 
