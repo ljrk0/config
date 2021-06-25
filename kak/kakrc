@@ -126,8 +126,18 @@ hook global BufSetOption filetype=(latex|context) %{
     }
     declare-option str osfontdir
     set-option buffer osfontdir "/usr/share/fonts//;%opt{projdir}/fonts//"
+
+    # Enable running within toolbox
+    declare-option str runner
+    evaluate-commands %sh{
+        if [ -z "$TOOLBOX_PATH" ]; then
+            exit 0;
+        fi
+        #TODO: Is this possible w/o flatpak?
+        echo "set-option buffer runner 'flatpak-spawn --host'"
+    }
     declare-option str podman
-    set-option buffer podman "podman run --rm -v %opt{projdir}:%opt{projdir} -w %opt{workdir}"
+    set-option buffer podman "%opt{runner} podman run --rm -v %opt{projdir}:%opt{projdir} --security-opt=label=disable -w %opt{workdir}"
 
     declare-option str buildcmd
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
