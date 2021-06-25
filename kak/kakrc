@@ -114,7 +114,8 @@ hook global BufSetOption filetype=(latex|context) %{
           # relative path
           *)  root=$(readlink -f $bufdir/$magic) ;;
         esac
-        workdir=$(dirname $root)
+        _workdir=$(dirname $root)
+        workdir=$(realpath "$_workdir")
         # Strip the file extension
         trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
