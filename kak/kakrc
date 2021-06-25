@@ -138,7 +138,7 @@ hook global BufSetOption filetype=(latex|context) %{
 # LaTeXmk suppport
 hook global BufSetOption filetype=(latex) %{
     declare-option str texlive
-    set-option buffer texlive "texlive/texlive"
+    set-option buffer texlive "docker.io/texlive/texlive"
     set-option buffer makecmd "%opt{podman} %opt{texlive} latexmk -pvc -view=none %opt{documentsrc}"
 }
 
