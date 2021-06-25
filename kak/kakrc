@@ -164,8 +164,14 @@ define-command -params 2 pdf-view %{
     }
 }
 
-require-module kitty
-set-option global kitty_window_type os
+
+#set-option global windowing_modules 'tmux' 'screen' 'kitty' 'iterm' 'x11' 'wayland'
+set-option global windowing_modules 'tmux' 'screen' 'kitty' 'iterm' 'wayland' 'x11'
+hook global ModuleLoaded wayland %{
+}
+hook global ModuleLoaded kitty %{
+    set-option global kitty_window_type os
+}
 
 # From wiki
 def ide %{
