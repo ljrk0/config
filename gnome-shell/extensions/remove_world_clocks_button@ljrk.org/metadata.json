@@ -1,0 +1,10 @@
+{
+  "name": "Remove World Clocks Button",
+  "description": "Remove World Clocks Button from dateMenu",
+  "uuid": "remove_world_clocks_button@ljrk.org",
+  "shell-version": [
+    "3.36",
+    "3.38",
+    "40"
+  ]
+}
