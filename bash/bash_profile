@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+
+#
+# ~/.bash_profile.
+# Do not modify (except you want to add login-shell only bash-specific settings).
+# This file is only executed when starting a login shell;
+# it (out)sources the actual setup of the login environment to ~/.profile.
+# Additionally it includes the bashrc if we are an interactive (login) shell.
+
+if [[ $- == *i* ]]; then
+	[[ -f ~/.bashrc ]] && . ~/.bashrc
+fi
+source ~/.profile

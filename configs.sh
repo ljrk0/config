@@ -33,4 +33,9 @@ ln -sf $PWD/latexmk ~/.config/
 ln -sf $PWD/zsh/zprofile ~/.zprofile
 ln -sf $PWD/zsh/zshenv ~/.zshenv
 ln -sf $PWD/zsh/zshrc ~/.zshrc
+
+ln -sf $PWD/bash/bash_profile ~/.bash_profile
+ln -sf $PWD/bash/bashrc ~/.bashrc
+ln -sf $PWD/bash/bash_logout ~/.bash_logout
+
 ln -sf $PWD/sh/profile ~/.profile
