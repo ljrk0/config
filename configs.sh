@@ -39,3 +39,5 @@ ln -sf $PWD/bash/bashrc ~/.bashrc
 ln -sf $PWD/bash/bash_logout ~/.bash_logout
 
 ln -sf $PWD/sh/profile ~/.profile
+
+ln -sf $PWD/readline/inputrc ~/.inputrc
