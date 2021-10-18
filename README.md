@@ -102,3 +102,7 @@ In order to implement our goal with these limited files, we set up extra logic:
    Since the environment set by .profile/environment.d is inherited, we don't
    need to explicitly source it.
 
+### Zsh
+
+This is similar to Bash, but Zsh loads the `.zshrc` in interactive mode even
+if it is a login shell, thus ridding us of needing to source `~/.zshrc` manually.
