@@ -118,6 +118,10 @@ function shtart() {
 }
 compdef _shtart shtart
 
+function open() {
+    shtart xdg-open $@
+}
+
 function _shtart() {
     local -a args
 

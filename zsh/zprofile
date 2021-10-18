@@ -1,87 +1,9 @@
-if [ "$XDG_CURRENT_DESKTOP" = "sway" ]; then
-    # Qt theme
-    export QT_QPA_PLATFORMTHEME=qt5ct
+#! /usr/bin/zsh
 
-    # LibreOffice
-    export SAL_USE_VCLPLUGIN=kde5
+#
+# ~/.zprofile.
+# Do not modify (except you want to add login-shell only zsh-specific settings).
+# This file is only executed when starting a login shell;
+# it (out)sources the actual setup of the login environment to ~/.profile.
 
-    # Java: Fix on Tiling WMs
-    export _JAVA_AWT_WM_NONREPARENTING=1
-
-    # Force use Wayland
-    export GDK_BACKEND=wayland
-
-    # Use portal for GTK apps to open File Chooser, find settings, etc.
-    #export GTK_USE_PORTAL=1
-
-    # Use SSH password agent
-    export SSH_ASKPASS=ksshaskpass    
-elif [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
-    # Use qgnomeplatform
-    export QT_QPA_PLATFORMTHEME=gnome
-
-    # Force use Wayland
-    # (breaks GNOME session)
-    #export GDK_BACKEND=wayland
-    # Use portal for GTK apps to open File Chooser, find settings, etc.
-    # (makes GNOME session slow)
-    #export GTK_USE_PORTAL=1
-fi
-
-
-# Tweaks
-## Mozilla: Use modern Webrender
-export MOZ_WEBRENDER=1
-
-## Force use Wayland (other than GDK)
-export MOZ_ENABLE_WAYLAND=1
-# FIXME: https://bugreports.qt.io/browse/QTBUG-68636
-#export QT_QPA_PLATFORM=wayland-egl
-export CLUTTER_BACKEND=wayland
-export SDL_VIDEODRIVER=wayland
-
-## Java: Don't try to scale.
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dsun.java2d.dpiaware=false"
-
-## Java: Use Anti-Aliasing
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on"
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.aatext=true"
-
-## Java: Use GTK+3 Look And Feel
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Dswing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export _JAVA_OPTIONS="$_JAVA_OPTIONS -Djdk.gtk.version=3"
-
-## Prevent Steam Big-Picture (and other SDL programs) from minimizing when
-## moving the cursor outside of the window/monitor
-export SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS=0
-
-## Colorful less
-export LESS=-R
-
-## LuaTeX search dirs
-#OSFONTDIR="/usr/share/fonts"
-
-## Threaded Gl
-export mesa_glthread=true
-
-### Per device tweaks
-hostname=`hostname`
-case "$hostname" in
-"zaphod"|"hoopyfrood")
-    # Intel: Use new OpenGL driver
-    export MESA_LOADER_DRIVER_OVERRIDE=iris
-
-    # Intel: VA-API, VDPAU
-    export LIBVA_DRIVER_NAME=iHD
-    export VDPAU_DRIVER=va_gl
-    ;;
-"Eddie")
-    # AMD: Use ACO compiler
-    export RADV_PERFTEST=aco
-    export LIBVA_DRIVER_NAME=radeonsi
-    export VDPAU_DRIVER=radeonsi
-    ;;
-*)
-    ;;
-esac
+source ~/.profile
