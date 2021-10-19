@@ -10,10 +10,10 @@ for conf in $PWD/environment/[0-9][0-9]-*.conf $PWD/environment/systemd-user-ses
 done
 case $(hostname) in
 "slartibartfast"|"hoopyfrood"|"zaphod")
-    ln -sf "$PWD/environment.d/40B-intel.conf" ~/.config/environment.d/
+    ln -sf "$PWD/environment/40B-intel.conf" ~/.config/environment.d/
     ;;
 "Eddie")
-    ln -sf "$PWD/environment.d/40A-amd.conf" ~/.config/environment.d/
+    ln -sf "$PWD/environment/40A-amd.conf" ~/.config/environment.d/
     ;;
 *)
     printf "Warning: unknown computer '%s', no specialised config installed\n" $(hostname)
