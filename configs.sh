@@ -39,5 +39,11 @@ ln -sf $PWD/bash/bashrc ~/.bashrc
 ln -sf $PWD/bash/bash_logout ~/.bash_logout
 
 ln -sf $PWD/sh/profile ~/.profile
+ln -sf $PWD/sh/aliases ~/.aliases
 
 ln -sf $PWD/readline/inputrc ~/.inputrc
+
+mkdir -p ~/.local/bin
+for f in $PWD/bin/*; do
+    ln -sf "$f" ~/.local/bin/
+done

@@ -1,0 +1,6 @@
+#! /bin/sh
+
+podman run --rm \
+           -v "$(pwd):/data"
+           docker.io/pandoc/latex:latest
+           $@

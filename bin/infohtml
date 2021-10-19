@@ -1,0 +1,5 @@
+#! /bin/sh
+
+for page; do
+    open "https://www.gnu.org/software/$page/manual/$page.html"
+done

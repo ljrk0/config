@@ -1,0 +1,20 @@
+#! /bin/sh
+
+# Force using sudoedit
+
+_sudo=$(command -pv sudo)
+
+cmd=$1
+
+case "$cmd" in
+    $VISUAL|$EDITOR)
+        shift
+        sudoedit $@
+        ;;
+    *)
+        $_sudo $@
+        ;;
+esac
+
+
+

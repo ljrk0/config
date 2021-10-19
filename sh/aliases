@@ -1,0 +1,18 @@
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ls='ls --color=auto'
+
+# Git aliases
+alias g='git'
+alias gb='git branch'
+alias ga='git add'
+alias gl='git pull'
+alias gp='git push'
+alias gst='git status'
+alias gc='git commit'
+alias gco='git checkout'
+alias gcmsg='git commit -m'
+
+alias make='bear -- make'
+
+alias bc='bc -q'

@@ -1,3 +1,5 @@
+#! /usr/bin/zsh
+
 HISTFILE=~/.histfile
 HISTSIZE=10000
 SAVEHIST=10000
@@ -73,62 +75,4 @@ promptinit
 prompt redhat
 
 
-
-
-alias diff='diff --color=auto'
-alias grep='grep --color=auto'
-alias ls='ls --color=auto'
-
-# Git aliases
-alias g='git'
-alias gb='git branch'
-alias ga='git add'
-alias gl='git pull'
-alias gp='git push'
-alias gst='git status'
-alias gc='git commit'
-alias gco='git checkout'
-alias gcmsg='git commit -m'
-
-alias make='bear -- make'
-
-alias bc='bc -q'
-
-# Safeguard to force sudoedit
-_sudo=$(command -v sudo)
-function sudo {
-    case $1 in
-    $VISUAL|$EDITOR)
-        shift
-        sudoedit ${@}
-        ;;
-    *)
-        $_sudo $@
-        ;;
-    esac
-}
-
-# Most remotes do not speak cat.
-#if [ "$TERM" = "xterm-kitty" ]; then
-#    alias ssh='env TERM=xterm-256color ssh'
-#fi
-
-function shtart() {
-    nohup $@ >/dev/null 2>&1 &!
-}
-compdef _shtart shtart
-
-function open() {
-    shtart xdg-open $@
-}
-
-function _shtart() {
-    local -a args
-
-    args=(
-        '(-)1:command: _command_names -e'
-	'*::arguments:{ _normal }'
-    )
-
-    _arguments -s -S $args
-}
+source ~/.aliases
