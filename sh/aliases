@@ -16,3 +16,7 @@ alias gcmsg='git commit -m'
 alias make='bear -- make'
 
 alias bc='bc -q'
+
+
+
+alias cdr='cd $(realpath .)'

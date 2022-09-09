@@ -70,7 +70,8 @@ hook global BufSetOption filetype=(rust) %{
     map -docstring "build" global user b ':make build<ret>'
 }
 
-hook global BufSetOption filetype=(latex|context) %{
+
+hook global BufSetOption filetype=(latex|context|udoc) %{
     declare-option str documentsrc
     declare-option str documentdest
 
@@ -90,7 +91,7 @@ hook global BufSetOption filetype=(latex|context) %{
         buffile=$kak_buffile
 
         # We have three (possibly) different directories:
-        # * project dir:  The current working directory.
+        # * project dir:  We assume this to be the current working directory!
         #   Usually the topmost dir, often containing multiple TeX roots and
         #   other resources such as bibliography files or fonts.
         # * buffer directory:  The directory containing the opened buffer.
@@ -114,15 +115,17 @@ hook global BufSetOption filetype=(latex|context) %{
           # relative path
           *)  root=$(readlink -f $bufdir/$magic) ;;
         esac
-        _workdir=$(dirname $root)
-        workdir=$(realpath "$_workdir")
+        root=$(realpath --relative-to=${projdir} ${root})
+        #_workdir=$(dirname $root)
+        #workdir=$(realpath "$_workdir")
         # Strip the file extension
         trunk=$(echo "$root" | sed 's/\.[^\.]*$//' - )
 
         echo "set-option buffer documentsrc ${root}"
         echo "set-option buffer documentdest ${trunk}.pdf"
         echo "set-option buffer projdir ${projdir}"
-        echo "set-option buffer workdir ${workdir}"
+        #echo "set-option buffer workdir ${workdir}"
+        #echo "set-option buffer workdir ${PWD}"
     }
     declare-option str osfontdir
     set-option buffer osfontdir "/usr/share/fonts//;%opt{projdir}/fonts//"
@@ -137,7 +140,7 @@ hook global BufSetOption filetype=(latex|context) %{
         echo "set-option buffer runner 'flatpak-spawn --host'"
     }
     declare-option str podman
-    set-option buffer podman "%opt{runner} podman run --rm -v %opt{projdir}:%opt{projdir} --security-opt=label=disable -w %opt{workdir}"
+    set-option buffer podman "%opt{runner} podman run --rm -v %opt{projdir}:/root --security-opt=label=disable -w /root"
 
     declare-option str buildcmd
     set-option buffer buildcmd ':make<ret>:evaluate-commands -try-client %opt{jumpclient} %{nop}<ret>'
@@ -149,13 +152,23 @@ hook global BufSetOption filetype=(latex|context) %{
 hook global BufSetOption filetype=(latex) %{
     declare-option str texlive
     set-option buffer texlive "docker.io/texlive/texlive"
-    set-option buffer makecmd "%opt{podman} %opt{texlive} latexmk -pvc -view=none %opt{documentsrc}"
+    set-option buffer makecmd "%opt{podman} -e OSFONTDIR='%opt{osfontdir}' -e TEXMFCACHE=/root/.texmfcache %opt{texlive} latexmk -pvc -view=none %opt{documentsrc}"
 }
 
 hook global BufSetOption filetype=(context) %{
     declare-option str context
     set-option buffer context "contextgarden/context:current"
-    set-option buffer makecmd "%opt{podman} %opt{context} env OSFONTDIR='%opt{osfontdir}' context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
+    set-option buffer makecmd "%opt{podman} -e OSFONTDIR='%opt{osfontdir}' -e TEXMFCACHE=/root/.texmfcache %opt{context} context --paranoid --errors=list --nonstopmode %opt{documentsrc}"
+}
+
+hook global BufSetOption filetype=(udoc) %{
+    declare-option str makeup
+    set-option buffer makeup "registry:5000/greg/markup_tool:latest"
+    set-option buffer makecmd "%opt{podman} %opt{makeup} make -f '/usr/local/markup_template/auxiliary/Makefile' %opt{documentdest}"
+
+    set-option buffer pdfviewer "xdg-open"
+    set-option buffer pdfvieweropts ""
+    set-option buffer pdfviewerfmt ""
 }
 
 # Use bear make wrapper.

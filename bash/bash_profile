@@ -11,3 +11,4 @@ if [[ $- == *i* ]]; then
 	[[ -f ~/.bashrc ]] && . ~/.bashrc
 fi
 source ~/.profile
+. "/home/ljrk/.local/share/cargo/env"

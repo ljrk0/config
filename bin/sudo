@@ -9,10 +9,10 @@ cmd=$1
 case "$cmd" in
     $VISUAL|$EDITOR)
         shift
-        sudoedit $@
+        sudoedit "$@"
         ;;
     *)
-        $_sudo $@
+        $_sudo "$@"
         ;;
 esac
 

@@ -4,4 +4,4 @@ podman run --rm \
            --net none \
            -v /:/host \
            registry:5000/greg/markup_tool:latest \
-           make -f "/usr/local/markup_template/auxiliary/Makefile" -C /host/$(pwd) $@
+           make -f "/usr/local/markup_template/auxiliary/Makefile" -C /host/$(realpath "$PWD") $@

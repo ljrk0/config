@@ -23,3 +23,5 @@ if [ "$GDMSESSION" != "gnome" ]; then
 		rm -f "$tmp"
 	fi
 fi
+
+. "/home/ljrk/.local/share/cargo/env"

@@ -7,11 +7,33 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-PS1='[\u@\h \W]\$ '
 
 HISTCONTROL=ignoredups:erasedups
 HISTSIZE=1000000
 HISTFILESIZE=1000000
 shopt -s histappend
 
+PS1='[\u@\h \W]\$ '
+
+# tab completion
+bind "TAB:menu-complete"
+bind "set show-all-if-ambiguous on"
+bind "set menu-complete-display-prefix on"
+
+#eval "$(starship init bash)"
+
 source ~/.aliases
+
+PATH="/home/ljrk/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/ljrk/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/ljrk/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/ljrk/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/ljrk/perl5"; export PERL_MM_OPT;
+
+# Support for opening terminals in CWD
+source /etc/profile.d/vte.sh
+. "/home/ljrk/.local/share/cargo/env"
+
+if [ "$HOSTNAME" = toolbox ]; then
+    source /home/ljrk/.local/share/cargo/env
+fi
