@@ -1,0 +1,77 @@
+#! /bin/sh
+
+set -e
+
+IMAGEDIR="$XDG_DATA_HOME/new-vm/images"
+LIBVIRTIM='/var/lib/libvirt/images'
+
+ubuntu_new_vm() {
+    UBUNTU_VERSION='20.04'
+    UBUNTU_ARCH='amd64'
+    UBUNTU_SIZE='20'
+    UBUNTU_MEMORY='8129'
+    UBUNTU_IMAGE_NAME="ubuntu-$UBUNTU_VERSION-server-cloudimg-$UBUNTU_ARCH-disk-kvm.img"
+
+    if [ ! -f "$LIBVIRTIM/$UBUNTU_IMAGE_NAME" ]; then
+        printf 'Template Ubuntu Cloud Image not found\n' >&2
+        exit 1
+    fi
+
+    # https://cloudinit.readthedocs.io/en/latest/topics/format.html
+    printf 'cloud-init User-Data Configuration:\n'
+    echo "#cloud-config
+hostname: $name
+users:
+  - name: $(id -un)
+    groups: users, admin, sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    passwd: $password
+    ssh_authorized_keys:
+      - $(cat $HOME/.ssh/id_ed25519.pub)
+disable_root: true
+package_update: true
+packages:
+ - qemu-guest-agent
+" | sudo tee "$LIBVIRTIM/$name-userdata.yaml"
+
+    printf 'Installing VM\n'
+    OVMFX64='/usr/share/edk2-ovmf/x64'
+    virt-install --connect qemu:///system                      \
+        --name "$name"                                         \
+        --memory "$UBUNTU_MEMORY"                              \
+        --cpu host                                             \
+        --vcpus 4                                              \
+        --boot "loader=$OVMFX64/OVMF_CODE.secboot.fd,loader.readonly=yes,loader.type=pflash,nvram.template=$OVMFX64/OVMF_VARS.fd,loader_secure=yes" \
+        --virt-type 'kvm'                                      \
+        --graphics 'none'                                      \
+        --network 'network=default'                            \
+        --sysinfo system.serial='ds=nocloud'                   \
+        --cloud-init "user-data=$LIBVIRTIM/$name-userdata.yaml,disable=on" \
+        --disk="size=$UBUNTU_SIZE,backing_store=$LIBVIRTIM/$UBUNTU_IMAGE_NAME" \
+        --os-type 'linux'                                      \
+        --os-variant "ubuntu$UBUNTU_VERSION"                   \
+        --noautoconsole
+
+    sudo rm "$LIBVIRTIM/$name-userdata.yaml"
+}
+
+if [ $# -ne 2 ]; then
+    printf 'Invalid number of arguments: %d\n' $# >&2
+    exit 1
+fi
+
+name=$1
+distro=$2
+
+password="$(openssl passwd -6 -salt $(head -c18 /dev/urandom | openssl base64))"
+
+case "$distro" in
+    'ubuntu')
+        ubuntu_new_vm
+        ;;
+    *)  printf 'Unsupported distro %s\n' "$distro" >&2
+        exit 1
+        ;;
+esac
+

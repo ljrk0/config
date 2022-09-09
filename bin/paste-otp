@@ -1,0 +1,4 @@
+#! /bin/sh
+
+wl-paste | zbarimg -q --raw - | pass otp append "$@"
+pass otp -c "$@"

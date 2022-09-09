@@ -1,0 +1,7 @@
+#! /bin/sh
+
+podman run --rm \
+           -v "$(pwd):/data" \
+	   -w /data \
+           docker.io/texlive/texlive:latest \
+           latexmk "$@"
