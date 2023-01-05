@@ -199,9 +199,18 @@ def ide %{
 set-option -add global ui_options ncurses_assistant=cat
 
 # Highlight column
-hook global BufSetOption autowrap_column=.* %{
-    add-highlighter -override buffer/autowrap_column column %opt{autowrap_column} default,red
+hook global WinSetOption autowrap_column=.* %{
+    evaluate-commands %sh{
+        name=window/autowrap_column
+        if [ "$kak_opt_autowrap_column" -gt 0 ]; then
+            column=$(($kak_opt_autowrap_column + 1))
+            echo "add-highlighter -override $name column $column default,red"
+        else
+            echo "remove-highlighter $name"
+        fi
+    }
 }
+
 set-face global Whitespace rgb:dddddd+f
 add-highlighter global/ show-whitespaces
 add-highlighter global/ number-lines -relative
